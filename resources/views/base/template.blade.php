@@ -42,10 +42,15 @@
         <a class="navbar-brand" href="/"><img src="/assets/image/logo.png" height="50" alt=""></a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link btn" style="color:white;" href="/daftarBuku">Seluruh Buku </a>
+                <a class="nav-link btn" style="color:white;" href="/daftarBuku">Seluruh Buku </a>    
+            @if(session('akses_id') == 1)
                 <a class="nav-link btn" style="color:white;" href="/inputBuku">Input Buku </a>
-                <a class="nav-link btn" style="color:white;" href="/listPinjaman">List Pinjaman Buku </a>
                 <a class="nav-link btn" style="color:white;" href="/dataPeminjaman">Daftar Peminjam Buku </a>
+            @endif
+            @if(session('akses_id') == 2)
+                <a class="nav-link btn" style="color:white;" href="/listPinjaman">List Pinjaman Buku </a>
+            @endif
+                
                 <a class="nav-link active btn" style="color:white;" href="/logout">Logout </a>
             </div>
         </div>

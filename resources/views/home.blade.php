@@ -3,12 +3,12 @@
 @section("header", "Daftar Buku")
 
 @section("konten")
+@if(session('akses_id') == 1)
 <div class="col-md-2">
-
     <a class="nav-link btn" style="color:white;" href="/inputBuku">Input Buku </a>
 </div>
 <br>
-
+@endif
 <thead>
     <tr>
         <th>ID Buku</th>
