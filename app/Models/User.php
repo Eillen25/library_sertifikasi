@@ -18,8 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
     ];
 
@@ -30,7 +29,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        // 'remember_token',
     ];
 
     /**
@@ -38,9 +37,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
 
     
     protected $table = "anggota";
@@ -57,9 +56,9 @@ class User extends Authenticatable
         }
         return false;
 
-        if(isset($userChecked) && count($userChecked) > 0){
-            return $res;
-        }
-        return null;
+        // if(isset($userChecked) && count($userChecked) > 0){
+        //     return $res;
+        // }
+        // return null;
     }
 }

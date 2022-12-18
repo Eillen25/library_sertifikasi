@@ -43,6 +43,7 @@ class UserController extends Controller
     public function listPinjaman() {
         // Menampilkan seluruh transaksi pinjam
         $username = Session::get("username");
+        // pass ke database harus array
         $data = [
             'username' => $username
         ];
