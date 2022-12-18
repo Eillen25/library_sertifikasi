@@ -149,4 +149,26 @@ class HomeController extends Controller
 
         return redirect("/dataPeminjaman");
     }
+
+    // Menampilkan halaman register
+    public function register() {
+        return view("register");
+    }
+
+    // Verifikasi akun baru, bila sesuai akan insert ke database
+    public function authRegist(Request $req) {
+        $this->validate($req,[
+            'nama' => 'required|min:5|max:255',
+            'username' => 'required|min:5|max:15|unique:anggota'
+         ]);
+
+        DB::table("anggota")->insert([
+            'username' => $req->username,
+            'nama_anggota' => $req->nama,
+            'password' => $req->password
+        ]);
+
+        return redirect("/");
+    }
+
 }

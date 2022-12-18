@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <script src="../../assets/js/jquery.min.js"></script>
     <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <style>
     body {
@@ -43,25 +43,24 @@
 
         <h4 style="color:white;">Data Perpustakaan</h4>
     </nav>
+    <!-- </div> -->
     <div class="container">
         <div class="card" style="margin-top:20px;">
             <div class="card-header text-center" style="background:white;padding-top:30px;">
-                <h3>Log In</h3>
+                <h3>Register</h3>
             </div>
-            <form action="/authentication" method="post">
+            <form action="/authRegist" method="post">
                 @csrf
                 <div class="card-body" style="background:white;">
 
-                    @if ($message = Session::get('error'))
-                    <div class="alert alert-danger alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
-                    </div>
-                    @endif
-                    @if ($message = Session::get('logout'))
-                    <div class="alert alert-warning alert-block">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
+
+                    @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
 
@@ -74,16 +73,21 @@
                                         required="required">
                                 </div>
                                 <div class="form-group">
+                                    <label for="username">Nama: </label>
+                                    <input class="form-control" placeholder="Nama" name="nama" type="text"
+                                        required="required">
+                                </div>
+                                <div class="form-group">
                                     <label for="username">Password: </label>
                                     <input class="form-control" placeholder="Password" name="password" type="password"
                                         required="required">
                                 </div>
-
+                                
                                 <button type='submit' class='btn btn-primary'>
                                     <i class='fa fa-sign-in'></i> Masuk
                                 </button>
                                 <div>
-                                    <a href="/register">Belum punya akun? Register disini</a>
+                                    <a href="/">Sudah punya akun? Login disini</a>
                                 </div>
                             </fieldset>
                         </form>

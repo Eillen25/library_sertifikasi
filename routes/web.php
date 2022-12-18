@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//LogIn
+// LogIn
 Route::get('/', 'App\Http\Controllers\HomeController@login');
 Route::post('/authentication','App\Http\Controllers\HomeController@auth');
 Route::get('/logout', 'App\Http\Controllers\HomeController@logout');
+
+// Register
+Route::get('/register', 'App\Http\Controllers\HomeController@register');
+Route::post('/authRegist', 'App\Http\Controllers\HomeController@authRegist');
 
 // CRUD Buku
 Route::get('/daftarBuku', 'App\Http\Controllers\HomeController@index');
