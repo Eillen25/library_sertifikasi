@@ -3,7 +3,11 @@
 @section("header", "Daftar Peminjam Buku")
 
 @section("konten")
-<a class="btn btn-warning btn-sm" href="/updateStatus">Peringati</a>
+<div class="col-md-2">
+    <a class="nav-link btn" style="color:white;" href="/updateStatus">Peringati</a>
+</div>
+<br>
+
 <thead>
     <tr>
         <th>Tenggat Waktu</th>
@@ -12,7 +16,7 @@
         <th>Nama Buku</th>
         <th>Peminjam</th>
         <th>Status Pengembalian</th>
-        <th>Aksi</th>
+        <!-- <th>Aksi</th> -->
     </tr>
 </thead>
 <tbody>
@@ -27,7 +31,7 @@
         <td>{{ $b->username }}</td>
         <td>{{ $b->status_pengembalian }}</td>
 
-        @if(($b->status_pengembalian) == "Sudah Dikembalikan")
+        <!-- @if(($b->status_pengembalian) == "Sudah Dikembalikan")
         <td>
             Done
         </td>
@@ -36,7 +40,7 @@
             <input type="hidden" name="id_buku" value="{{ $b->id_buku }}">
             <a class="btn btn-warning btn-sm" href="/updateStatus/{{ $b->id_peminjaman }}">Peringati</a>
         </td>
-        @endif
+        @endif -->
     </tr>
     @endforeach
 </tbody>

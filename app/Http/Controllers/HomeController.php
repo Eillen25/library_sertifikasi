@@ -131,17 +131,14 @@ class HomeController extends Controller
     }
 
 
-    public function updateStatus($id) {
+    public function updateStatus() {
         $todayDate = Carbon::now()->toDateString();
-        $getData = DB::table("peminjaman")->get();
-        
-        $dueDate = $getData[0];
-        // dd($dueDate);
-        DB::table('peminjaman')
-            ->where($todayDate, '>', 'tenggat_kembali')
-            ->update([
-                'status_pengembalian' => 2
-            ]);
+        $peminjaman = new Peminjaman();
+        $data = [
+            'todayDate' => $todayDate
+        ];
+        $updateStatus = $peminjaman->updateStatusTerlambat($data);
+        return redirect("/dataPeminjaman");
         
     }
 }

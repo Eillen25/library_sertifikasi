@@ -34,4 +34,4 @@ Route::get('/kembalikanBuku/{id}', 'App\Http\Controllers\UserController@kembalik
 
 // Daftar Peminjam Buku
 Route::get('/dataPeminjaman', 'App\Http\Controllers\HomeController@dataPeminjaman');
-Route::get('/updateStatus/{id}', 'App\Http\Controllers\HomeController@updateStatus');
+Route::get('/updateStatus', 'App\Http\Controllers\HomeController@updateStatus');
