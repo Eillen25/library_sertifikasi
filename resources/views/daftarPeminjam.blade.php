@@ -32,3 +32,11 @@
     @endforeach
 </tbody>
 @endsection
+@section('paginate')
+    <br>
+    <div class="d-flex justify-content">
+        {{ $allData->links('pagination::bootstrap-4') }}
+    </div>
+    Halaman: {{$allData->currentpage()}} <br>
+    Jumlah Data: {{$allData->total()}} <br>
+@endsection

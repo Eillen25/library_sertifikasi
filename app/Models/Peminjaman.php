@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Pagination\Paginator;
 
 class Peminjaman extends Model
 {
@@ -23,9 +24,11 @@ class Peminjaman extends Model
 
     // Fungsi untuk seluruh data peminjaman
     public function dataPeminjaman() {
-        $cmd = "SELECT b.id_buku, p.id_peminjaman, username, b.nama_buku, b.gambar_buku, tanggal_pinjam, tenggat_kembali, tanggal_kembali, IF(status_pengembalian=0,'Belum Dikembalikan', IF(status_pengembalian=1,'Sudah Dikembalikan', 'Melebihi Tenggat Waktu')) `status_pengembalian` FROM `peminjaman` p, `buku` b WHERE p.id_buku = b.id_buku ORDER BY status_pengembalian, tenggat_kembali";
-        $allData = DB::select($cmd);
-
+        $allData = DB::table(DB::raw('peminjaman AS p JOIN buku AS b ON p.id_buku = b.id_buku'))
+        ->select(DB::raw("b.id_buku, p.id_peminjaman, username, b.nama_buku, b.gambar_buku, tanggal_pinjam, tenggat_kembali, tanggal_kembali, IF(status_pengembalian=0,'Belum Dikembalikan', IF(status_pengembalian=1,'Sudah Dikembalikan', 'Melebihi Tenggat Waktu')) `status_pengembalian`"))
+        ->orderBy("status_pengembalian", "ASC", "tenggat_kembali", "ASC")
+        ->paginate(10);
+        
         return $allData;
     }
 
