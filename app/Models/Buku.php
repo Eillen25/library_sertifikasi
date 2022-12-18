@@ -9,6 +9,6 @@ use DB;
 class Buku extends Model
 {
     use HasFactory;
-    // protected $primaryKey = "id_buku";
+    // Menyimpan tabel buku ke class
     protected $table = "buku";
 }

@@ -14,24 +14,26 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
-    // Menampilkan keseluruhan data buku
+    // Fungsi untuk menampilkan keseluruhan data buku
     public function index() {
         $buku = Buku::all();
 
         return view("home", ["buku" => $buku]);
     }
 
+    // Fungsi untuk menampilkan halaman untuk input data buku baru
     public function inputBuku() {
-
         return view("inputBuku");
     }
 
     // insert data ke table buku
     public function add(Request $req) {
+        // menyimpan file gambar ke asset
         $file = $req->file('file_gambar');
         $uploadPath = 'assets\image';
         $file->move($uploadPath,$file->getClientOriginalName());
 
+        // insert data ke database
         DB::table("buku")->insert([
             'nama_buku' => $req->nama,
             'deskripsi_buku' => $req->deskripsi,
@@ -62,8 +64,10 @@ class HomeController extends Controller
         return view('editBuku',['getEdited' => $getEdited]);
     }
 
+    // Proses update data buku ke database 
     public function update(Request $req) {
         $file = $req->file('file_gambar');
+        // Jika ada file gambar baru
         if($file != null) {
             $uploadPath = 'assets\image';
             $file->move($uploadPath,$file->getClientOriginalName());
@@ -73,6 +77,7 @@ class HomeController extends Controller
                 'gambar_buku' => $file->getClientOriginalName()
             ]);
         } else {
+            // Jika tidak ada file gambar baru
             DB::table('buku')->where('id_buku',$req->id)->update([
                 'nama_buku' => $req->nama,
                 'deskripsi_buku' => $req->deskripsi,
@@ -84,23 +89,23 @@ class HomeController extends Controller
     }
 
 
-    // Login dan auntentikasi
+    // Fungsi untuk menampilkan halaman login
     public function login() {
         return view("login");
     }
 
+    // Fungsi untuk memproses data login, akan dilempar ke model untuk pengecekan
     public function auth(Request $req) {
         $username = $req->input('username');
         $pass = $req->input('password');
-
         $data = [
             'username' => $username,
             'password' => $pass
         ];
-
         $userData = new User();
         $userChecked = $userData->checkLogin($data);
 
+        // Jika data pengguna ditemukan, data username dan status keanggotaan akan disimpan
         if($userChecked) {
             Session::put('username', $username);
             Session::put('pass', $pass);
@@ -112,10 +117,12 @@ class HomeController extends Controller
         } else {
             // Jika salah username/password
             Session::flash('error', 'Email dan Password tidak sesuai!');
+
             return redirect('/');
         }
     }
 
+    // Fungsi untuk logout, menghapus session dan kembali ke halaman login
     public function logout() {
         Session::flush();
         Session::flash("logout", "Anda telah logout");
@@ -123,14 +130,15 @@ class HomeController extends Controller
         return redirect("/");
     }
 
-
+    // Fungsi untuk menampilkan seluruh data peminjaman
     public function dataPeminjaman() {
         $data = new Peminjaman;
         $allData = $data->dataPeminjaman();
+
         return view('daftarPeminjam', compact('allData'));
     }
 
-
+    // Fungsi untuk melakukan update status pengembalian bila telah melewati batas tenggat kembali
     public function updateStatus() {
         $todayDate = Carbon::now()->toDateString();
         $peminjaman = new Peminjaman();
@@ -138,7 +146,7 @@ class HomeController extends Controller
             'todayDate' => $todayDate
         ];
         $updateStatus = $peminjaman->updateStatusTerlambat($data);
+
         return redirect("/dataPeminjaman");
-        
     }
 }

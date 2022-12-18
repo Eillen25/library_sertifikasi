@@ -11,6 +11,7 @@ use Session;
 
 class UserController extends Controller
 {
+    // Fungsi untuk menampilkan halaman pinjam Buku + mengambil tanggal hari ini dan duedate
     public function pinjamBuku($id) {
         $getBookData = DB::table("buku")->where("id_buku", $id)->get();
         $todayDate = Carbon::now()->toDateString();
@@ -19,9 +20,9 @@ class UserController extends Controller
         return view("pinjamBuku", ["getBookData" => $getBookData, "todayDate" => $todayDate, "dueDate" => $dueDate]);
     }
     
+    // Fungsi untuk menambah data peminjaman
     public function inputPeminjaman(Request $req) {
         $username = Session::get("username");
-        
         $todayDate = Carbon::now()->toDateString();
         $dueDate = Carbon::today()->addDays(7)->toDateString();
 
@@ -32,16 +33,16 @@ class UserController extends Controller
             "tenggat_kembali" => $dueDate
         ]);
 
+        // Mengubah status buku menjadi tidak tersedia karena sudah dipinjam
         DB::table('buku')->where('id_buku',$req->id)->update([
             'status_ketersediaan' => 0
         ]);
 
         return redirect("listPinjaman");
-
     }
 
+    // Fungsi untuk menampilkan data buku yang dipinjam
     public function listPinjaman() {
-        // Menampilkan seluruh transaksi pinjam
         $username = Session::get("username");
         // pass ke database harus array
         $data = [
@@ -53,6 +54,7 @@ class UserController extends Controller
         return view("listPinjaman", compact('checkListPinjaman'));
     }
 
+    // Fungsi untuk mengembalikan buku
     public function kembalikanBuku(Request $req) {
         // Update status pengembalian user
         $todayDate = Carbon::now()->toDateString();
